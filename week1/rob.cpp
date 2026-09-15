@@ -1,11 +1,11 @@
 // 3. 打家劫舍
 
-// 线性打家劫舍
+// 线性打家劫舍 ————198
 dp[i] = max(dp[i-1], dp[i-2] + nums[i-1]);
 
 
 
-// 环形打家劫舍（选首不选尾）
+// 环形打家劫舍（选首不选尾）————213
 int rob(vector<int>& nums) {
         if (nums.size() == 1) return nums[0];
         int result1 = robRange(nums, 0, nums.size() - 2); // 情况一
@@ -25,7 +25,7 @@ int robRange(vector<int>& nums, int start, int end) {
 
 
 
-// 二叉树型打家劫舍(偷还是不偷当前节点)
+// 二叉树型打家劫舍(偷还是不偷当前节点) ————337
 // 长度为2的数组，0：不偷，1：偷
 vector<int> robTree(TreeNode* cur) {
     if (cur == NULL) return vector<int>{0, 0};
