@@ -1,0 +1,23 @@
+// 单调自增的数字（738）
+
+class Solution {
+private:
+    // 判断一个数字的各位上是否是递增
+    bool checkNum(int num) {
+        int max = 10;
+        while (num) {
+            int t = num % 10;
+            if (max >= t) max = t;
+            else return false;
+            num = num / 10;
+        }
+        return true;
+    }
+public:
+    int monotoneIncreasingDigits(int N) {
+        for (int i = N; i > 0; i--) { // 从大到小遍历
+            if (checkNum(i)) return i;
+        }
+        return 0;
+    }
+};
