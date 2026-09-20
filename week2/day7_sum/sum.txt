@@ -1,0 +1,36 @@
+// 一周总结
+
+1. 贪心算法
+sort(intervals.begin(), intervals.end(),
+     [](auto& a, auto& b) { return a[1] < b[1]; });
+int count = 0, end = INT_MIN;
+for (auto& in : intervals) {
+    if (in[0] >= end) { count++; end = in[1]; }
+}
+
+2. 回溯算法
+void backtrack(路径, 选择列表) {
+    if (满足结束条件) {
+        结果.push_back(路径);
+        return;
+    }
+    for (选择 : 选择列表) {
+        做选择;
+        backtrack(路径, 选择列表);
+        撤销选择;
+    }
+}
+
+3. 双指针
+int left = 0, ans = 0;
+for (int right = 0; right < n; right++) {
+    // 加入 nums[right]
+    while (窗口不满足条件) {
+        // 移除 nums[left]
+        left++;
+    }
+    ans = max(ans, right - left + 1);
+}
+
+4. 递归与分治算法
+分解 → 解决 → 合并。子问题必须独立、不重叠。
