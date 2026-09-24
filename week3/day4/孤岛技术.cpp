@@ -1,4 +1,4 @@
-// 岛屿数量（98）
+// 孤岛技术（98）
 
 #include <iostream>
 #include <vector>
