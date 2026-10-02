@@ -176,23 +176,33 @@ void q7()
 		int n, m, k;
 		cin >> n >> m >> k;
 
-		int R = (n - 1) / m + 1;        //总行数
-		int last = n - (R - 1) * m;     //最后一行个数
+		int R;
+		if (n%m > 0) R = n / m + 1;
+		else R = n/m;        //总行数
+		int last = n - (R-1)*m;     //最后一行个数
 
 		// k的坐标 rk,ck
-		int rk = (k - 1) / m + 1;
-		int ck = (k - 1) % m + 1;
+		int x,y;
+		if (k % m > 0)
+		{
+			y = k / m + 1;
+			x = k - (y-1) * m;
+		}
+		else
+		{
+			y = k / m;
+			x = m;
+		}
 
 		// 行代价：环形上下
-		int dr = abs(1 - rk);
-		int cost_r = min(dr, R - dr);
+		int cost_r;
+		if (x > last) cost_r = min(y - 1, R - y);
+		else cost_r = min(y - 1, R + 1 - y);
 
 		// 列代价：本行内环形左右
-		int len_c;
-		if (rk == R) len_c = last;
-		else len_c = m;
-		int dc = abs(1 - ck);
-		int cost_c = min(dc, len_c - dc);
+		int cost_c;
+		if (y == R) cost_c = min(x - 1, last + 1 - x);
+		else cost_c = min(x - 1, m + 1 - x);
 
 		cout << cost_r + cost_c;
 	}
