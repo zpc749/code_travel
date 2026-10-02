@@ -208,43 +208,57 @@ void q7()
 	}
 }
 // 8.树上守卫战
+vector<int> e[100005];
+
+// dfs返回：以u为根的子树，是否存在“分叉（>=2个叶子分支）”
+// true：子树里面出现分叉；false：子树是一条链
+bool dfs(int u, int fa)
+{
+	// 不是根，度数为1，这就是叶子节点
+	if (e[u].size() == 1 && u != 1)
+	{
+		return true;
+	}
+
+	int cnt = 0; // 统计有多少个子分支返回true（叶子分支）
+	for (int v : e[u])
+	{
+		if (v == fa) continue;
+		if (dfs(v, u))
+		{
+			cnt++;
+		}
+	}
+
+	// 当前点有2个以上叶子分支，出现分叉
+	if (cnt > 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 void q8()
 {
 	int T; cin >> T;
 	while (T--)
 	{
 		int n; cin >> n;
-		vector<vector<int>> adj(n + 1);
-		for (int i = 0; i < n - 1; i++)
+		for (int i = 1; i <= n; i++) e[i].clear();
+		for (int i = 1; i < n; i++)
 		{
 			int u, v; cin >> u >> v;
-			adj[u].push_back(v);
-			adj[v].push_back(u);
+			e[u].push_back(v);
+			e[v].push_back(u);
 		}
 		// BFS求根1的最大深度（边数）
-		vector<int> dep(n + 1, 0);
-		vector<int> fa(n + 1, -1);
-		queue<int> q;
-		q.push(1);
-		dep[1] = 0;
-		int maxd = 0;
-		while (!q.empty())
-		{
-			int u = q.front();
-			q.pop();
-			maxd = max(maxd, dep[u]);
-			for (int ne : adj[u])
-			{
-				if (ne != fa[u])
-				{
-					fa[ne] = u;
-					dep[ne] = dep[u] + 1;
-					q.push(ne);
-				}
-			}
-		}
-		if (maxd == 1) cout << "YES\n";
-		else cout << "NO\n";
+		bool ans = dfs(1, 0);
+		if (ans)
+			cout << "NO\n";
+		else
+			cout << "YES\n";
 	}
 }
 int main()
